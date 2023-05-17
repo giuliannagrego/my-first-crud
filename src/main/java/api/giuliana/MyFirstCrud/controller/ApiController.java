@@ -1,6 +1,7 @@
 package api.giuliana.MyFirstCrud.controller;
 
 import api.giuliana.MyFirstCrud.entity.NewUser;
+import api.giuliana.MyFirstCrud.repository.NewUserRepository;
 import api.giuliana.MyFirstCrud.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public class ApiController {
 
     @Autowired
-    private UserService userService;
+    private NewUserRepository newUserRepository;
 
     @GetMapping(path = "/teste")
     public ResponseEntity test() {
@@ -28,7 +29,7 @@ public class ApiController {
 
     @PostMapping(path = "/criar_usuario")
     public ResponseEntity users(@RequestHeader String user) {
-        userService.createUser(user);
+        NewUser usuario = newUserRepository.findByName(user);
         return ResponseEntity.status(HttpStatus.OK).body("Usuario criado");
     }
 
